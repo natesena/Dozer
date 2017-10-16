@@ -12,23 +12,24 @@ const
     MongoDBStore = require('connect-mongodb-session')(session),
     passport = require('passport'),
     passportConfig = require('./config/passport.js'),
-    userRoutes = require('./routes/users.js')
+    userRoutes = require('./routes/users.js'),
+    tripRoutes = require('./routes/trips_routes.js')
 
 // environment port
 const
-port = process.env.PORT || 3000,
-mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/passport-authentication'
+    port = process.env.PORT || 3000,
+    mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/passport-authentication'
 
 // mongoose connection
 mongoose.connect(mongoConnectionString, (err) => {
-console.log(err || "Connected to MongoDB (passport-authentication)")
-})
+    console.log(err || "Connected to MongoDB (passport-authentication)")
+    })
 
 // will store session information as a 'sessions' collection in Mongo
 const store = new MongoDBStore({
-uri: mongoConnectionString,
-collection: 'sessions'
-});
+    uri: mongoConnectionString,
+    collection: 'sessions'
+    });
 
 // middleware
 app.use(logger('dev'))
@@ -62,11 +63,14 @@ app.use((req, res, next) => {
 
 //root route
 app.get('/', (req,res) => {
-res.render('index')
+    res.render('index')
 })
+
+app.use('/:userId/trips', tripRoutes)
 
 app.use('/', userRoutes)
 
 app.listen(port, (err) => {
 console.log(err || "Server running on port " + port)
 })
+
