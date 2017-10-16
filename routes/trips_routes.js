@@ -1,14 +1,13 @@
 const
     express = require('express'),
     tripsRouter = new express.Router(),
-    Trip = require('../models/Trip.js'),
-    Setting = require('../models/Settings.js')
+    Trip = require('../models/Trip.js')
 
 
 tripsRouter.route('/')
     .get((req, res) => {
         Trip.find({}, (err, trips) => {
-            res.json(trips)
+            res.render('trip_selection', {trips: trips})
         })
     })
     .post((req, res) => {

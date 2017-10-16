@@ -66,7 +66,7 @@ app.get('/', (req,res) => {
     res.render('index')
 })
 
-app.use('/:userId/trips', tripRoutes)
+app.use('/trips', tripRoutes)
 
 app.use('/', userRoutes)
 

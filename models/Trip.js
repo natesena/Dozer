@@ -8,7 +8,8 @@ const
         //method: "call" or "text"
         method: {type: String, default: "text", required: true},
         //timing: "distance" or "timeTo"
-        timing: {type: String, default: "timeTo", required: true}
+        timing: {type: String, default: "timeTo", required: true},
+        user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     })
 
 module.exports = mongoose.model('Trip', tripSchema)

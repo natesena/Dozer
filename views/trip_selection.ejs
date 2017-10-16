@@ -1,14 +1,5 @@
-<!-- Author: Nate -->
-<!-- if user has previous trips -->
-<% if(sortedTripsByDest){ %>
-    <!-- add buttons for three most common trips -->
-    <% for(let i = 0; i < 3; i++){ %>
-        <% if(sortedTripsByDest[i]){ %>
-            <!-- need to discern trip buttons -->
-            <button class="trip-selection-button" id="trip-selection-i"><%= sortedTripsByDest[i] %></button>
-        <% } %>
-        <% else break %>
-    <% } %>
-<% } %>
+<%= trips %>
 <!-- must discrern routes -->
-<button class="trip-selection-button">New Trip</button>
+<form method="post" action="/trips" >
+    <button type=“submit”>New Trip</button>
+</form>
