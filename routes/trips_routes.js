@@ -1,11 +1,16 @@
 const
     express = require('express'),
     tripsRouter = new express.Router(),
-    Trip = require('../models/Trip.js')
+    Trip = require('../models/Trip.js'),
     Setting = require('../models/Settings.js')
 
 
 tripsRouter.route('/')
+    .get((req, res) => {
+        Trip.find({}, (err, trips) => {
+            res.json(trips)
+        })
+    })
     .post((req, res) => {
         var newTrip = new Trip()
         newTrip.save((err, trip) => {
@@ -25,3 +30,4 @@ tripsRouter.route('/:tripId')
         })
     })
 
+module.exports = tripsRouter
