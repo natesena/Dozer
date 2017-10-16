@@ -8,6 +8,7 @@ userRouter.route('/login')
     res.render('login', {message: req.flash('loginMessage')})
 })
 .post(passport.authenticate('local-login', {
+    
     successRedirect: '/trips',
     failureRedirect: '/login'
 }))
