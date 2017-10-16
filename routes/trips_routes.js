@@ -3,13 +3,13 @@ const
     tripsRouter = new express.Router(),
     Trip = require('../models/Trip.js')
 
+
 tripsRouter.route('/')
     .get((req, res) => {
         //need to find by user
         Trip.find({}, (err, trips) => {
             //need to order trips by destination
             res.render('trip_selection', {trips: trips})
-            
         })
     })
     //need to post to user

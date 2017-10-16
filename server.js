@@ -68,6 +68,9 @@ app.get('/', (req,res) => {
 
 
 app.use('/trips', tripRoutes)
+
+
+app.use('/trips', tripRoutes)
 app.use('/', userRoutes)
 
 app.listen(port, (err) => {
