@@ -2,3 +2,38 @@
 <h1>You are on the trip page!</h1>
 <p>Google Map here</p>
 <p>Settings here</p>
+<!-- Start,End, Method,Timing -->
+<form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Start</label>
+      <input type="text" class="form-control" id=""  placeholder="Start Location">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">End</label>
+      <input type="text" class="form-control" id="" placeholder="End Location">
+    </div>
+    <!-- need Method, Timing -->
+    <!-- Upon click, add new field for method/timing -->
+    <button class="btn" id="response-setting-add">+</button>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    var addResponseEl = document.getElementById('response-setting-add')
+    //upon click, append the new fields to form
+    addResponseEl.addEventListener('click', (evt)=>{
+        evt.preventDefault()
+        console.log('response settings clicked')
+    })
+</script>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </div>
