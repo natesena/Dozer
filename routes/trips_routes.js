@@ -7,7 +7,7 @@ const
 tripsRouter.route('/')
     .get((req, res) => {
         //need to find by user
-        Trip.find({}, (err, trips) => {
+        Trip.find({user: req.currentUser}, (err, trips) => {
             //need to order trips by destination
             res.render('trip_selection', {trips: trips})
         })
@@ -15,6 +15,7 @@ tripsRouter.route('/')
     //need to post to user
     .post((req, res) => {
         var newTrip = new Trip()
+        newTrip.user = req.currentUser
         newTrip.save((err, trip) => {
             res.json({success: true, message: "Trip Created!", trip: trip})
         })
