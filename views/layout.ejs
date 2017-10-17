@@ -8,6 +8,13 @@
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<% if(!currentUser) { %>
+		<% currentUser = "not logged in" %>
+	<% } %>
+		<%= currentUser.name %>
+	<form action="/logout" method="get">
+		<button class="btn" type="submit">logout</button>
+	</form>
 	<div class="container">
 		<%- body %>
 	</div>
