@@ -1,39 +1,62 @@
-<h1>Dozer</h1>
+
 <h1>You are on the trip page!</h1>
 <p>Google Map here</p>
 <p>Settings here</p>
+<p><%= trip.method %></p>
 <!-- Start,End, Method,Timing -->
+
 <form>
     <div class="form-group">
-      <label for="exampleInputEmail1">Start</label>
-      <input type="text" class="form-control" id=""  placeholder="Start Location">
+      <label for="exampleInputEmail1">Start Location</label>
+      <input type="text" class="form-control" id=""  placeholder="<%= trip.start %>">
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">End</label>
-      <input type="text" class="form-control" id="" placeholder="End Location">
+      <label for="exampleInputPassword1">End Location</label>
+      <input type="text" class="form-control" id="" placeholder="<%= trip.end %>">
     </div>
     <!-- need Method, Timing -->
     <!-- Upon click, add new field for method/timing -->
-    <button class="btn" id="response-setting-add">+</button>
+    <div class="row">
+        <div class="col-sm-3">
+            <select class="custom-select">
+                    <option selected>Time Method</option>
+                    <option value="1" <% if (trip.timing =='By Distance') { %> selected="selected"<% } %>>By Distance</option>
+                    <option value="2" <% if (trip.timing =='By Time') { %> selected="selected"<% } %>>By Time</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <select class="custom-select">
+                    <option selected>Alarm Option</option>
+                    <option value="1" <% if (trip.method =='Call') { %> selected="selected"<% } %>>Call</option>
+                    <option value="2" <% if (trip.method =='Text') { %> selected="selected"<% } %>>Text</option>
+            </select>
+        </div >
+        <!-- this will change base on first dropdown select -->
+        <div class="col-sm-3">
+            <div class="form-group">
+                    <label>Alert Me</label>
+                    <input type="number" class="form-control" id="" placeholder="5 minutes before">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <label for="">Add Another Alarm</label><br>
+            <button class="btn" id="response-setting-add">+</button>
+        </div>
+    </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
-    var addResponseEl = document.getElementById('response-setting-add')
-    //upon click, append the new fields to form
-    addResponseEl.addEventListener('click', (evt)=>{
+    //if contents of select option equal value from databse, give it selected property
+
+    $addResponseEl = $('#response-setting-add')
+    $addResponseEl.click((evt)=>{
         evt.preventDefault()
-        console.log('response settings clicked')
+        //want method(dropdown), amount of time before(number form), and lastly calculation method(dropdown)
+        $('<br><button>Hey</button>').insertAfter($addResponseEl)
+        console.log('I was clicked')
     })
+    //upon click, append the new fields to form
+    
 </script>
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
