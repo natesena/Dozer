@@ -39,7 +39,7 @@ tripsRouter.route('/')
 
 tripsRouter.route('/:tripId')
     .get((req, res) => {
-        Trip.findById(req.params.id, (err, trip) => {
+        Trip.findById(req.params.tripId, (err, trip) => {
             if(err) {
                 res.json(err)
             }
