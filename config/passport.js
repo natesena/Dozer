@@ -1,7 +1,9 @@
 const
     passport = require('passport'),
+    //GoogleStrategy = require('passport-google').Strategy,
     LocalStrategy = require('passport-local').Strategy,
     User = require('../models/User.js')
+    
 
 
 // serializeUser() takes the logged in User object, create a session 
@@ -52,5 +54,17 @@ passport.use('local-login', new LocalStrategy({
 		return done(null, user)
 	})
 }))
+
+// Google SignIn
+// passport.use(new GoogleStrategy({
+//     returnURL: 'http://localhost:3000/auth/google/return',
+//     realm: 'http://localhost:3000/'
+//   },
+//   function(identifier, done) {
+//     User.findByOpenID({ openId: identifier }, function (err, user) {
+//       return done(err, user);
+//     });
+//   }
+// ));
 
 module.exports = passport
