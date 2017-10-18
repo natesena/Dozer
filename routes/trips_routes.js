@@ -6,22 +6,34 @@ const
     nodemailer = require('nodemailer'),
     User = require('../models/User.js')
 
-
-
 tripsRouter.route('/')
     .get((req, res) => {
         //need to find by user
+        console.log(req.user)
         Trip.find({user: req.user}, (err, trips) => {
+          //console.log()
             //look through user's trips and find top 3 destinations
-            var sortedTripsByDest = _.chain(trips)
-                .sortBy((trip)=>{
-                    return trip.end
-                })
-                .reverse()
-            console.log(sortedTripsByDest)
-            res.render('trip_selection', {trips: trips, sortedEnds: sortedTripsByDest})
+            // if(err){
+            //     res.json(err)
+            // } else{
+            Trip.aggregate(
+                {
+                    $group: {
+                      _id: "$end", count: { $sum: 1 }}})
+              .exec(function(err, aggregatedTrips){
+                if(err)console.log(err)
+                console.log(aggregatedTrips)
+                res.render('trip_selection', {trips: trips, sortedEnds: aggregatedTrips})
+              
+                
+            })
+       // }
+  
         })
+        
     })
+
+
 
     // send a array of three trips
     //need to post to user

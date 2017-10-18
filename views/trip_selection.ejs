@@ -6,7 +6,7 @@
 <br>
 <p>Below should be the sorted trip destinations</p>
 <% sortedEnds.forEach(function(element) {   %>
-     <%= element %> <br> 
+     <%= `${element._id} ${element.count}` %> <br> 
 <%  })                                      %>
 <!-- must discrern routes -->
 <form method="post" action="/trips" >
