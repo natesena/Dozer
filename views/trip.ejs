@@ -51,6 +51,7 @@
     console.log($('#start-location').val())
     //if contents of select option equal value from databse, give it selected property
     $updateTrip = $('#update-trip-submit')
+    
     $addResponseEl = $('#response-setting-add')
     $addResponseEl.click((evt)=>{
         evt.preventDefault()
@@ -58,12 +59,17 @@
         $('<br><button>Hey</button>').insertAfter($addResponseEl)
         console.log('I was clicked')
     })
+
+    $startPH = $('#start-location')
+    
     //upon click, append the new fields to form
     //ajax requests for updating form when hit submit
     $updateTrip.click((evt)=>{
         evt.preventDefault()
         //set values from DOM
+        
         //put values intro form data
+            
         var updatedTrip = {
             start: $('#start-location').val(),
             end: $('#end-location').val(),
@@ -75,6 +81,9 @@
         $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
             console.log("response", res)
         })
+    }) 
+    var thisTrip
+    $.ajax({url:'/trips/<%= trip.id %>/json', method: 'get'}).done((res)=>{
+        thisTrip = res
     })
-    
 </script>

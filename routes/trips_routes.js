@@ -60,5 +60,17 @@ tripsRouter.route('/:tripId')
             }
         })
     })
+tripsRouter.route('/:tripId/json')
+    .get((req, res) => {
+        console.log(req.params.tripId)
+        Trip.findById(req.params.tripId, (err, trip) => {
+            if(err) {
+                res.json(err)
+            }
+            else{
+                res.json(trip)
+            }
+        })
+    })
 
 module.exports = tripsRouter
