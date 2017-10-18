@@ -1,10 +1,54 @@
 
+<script>
+        var thisTrip
+        $.ajax({url:'/trips/<%= trip.id %>/json', method: 'get'}).done((res)=>{
+            thisTrip = res
+        })  
+       
+        //if contents of select option equal value from database, give it selected property
+        $updateTrip = $('#update-trip-submit')
+        
+        $addResponseEl = $('#response-setting-add')
+        $addResponseEl.click((evt)=>{
+            evt.preventDefault()
+            //want method(dropdown), amount of time before(number form), and lastly calculation method(dropdown)
+            $('<br><button>Hey</button>').insertAfter($addResponseEl)
+            console.log('I was clicked')
+        })
+    
+        $startPH = $('#start-location')
+        
+        //upon click, append the new fields to form
+        $updateTrip.click((evt)=>{
+            evt.preventDefault()
+            //if blank, don't change to blank!
+            $start = $('#start-location').val() || thisTrip.start
+            $end = $('#end-location').val() || thisTrip.end
+            //put values intro form data
+            var updatedTrip = {
+                start: $start,
+                end: $end,
+                method: $(".alarm-method-select option:selected")[0].text,
+                timing: $(".time-method-select option:selected")[0].text,
+            }
+            //send it!
+            console.log('tried to update trip')
+            $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
+                console.log("response", res)
+            })
+        }) 
+</script>
 <h1>You are on the trip page!</h1>
-<p>Google Map here</p>
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDsMnw8UI7aAC_amQkRcoTruyoZ4nBSsQE
+    &q=Seattle" allowfullscreen>
+</iframe>
 <p>Settings here</p>
-<p><%= trip.method %></p>
-<!-- Start,End, Method,Timing -->
 
+<!-- Start,End, Method,Timing -->
 <form method="patch">
     <div class="form-group">
       <label>Start Location</label>
@@ -47,43 +91,4 @@
     <button type="submit" class="btn btn-primary" id="update-trip-submit">Submit</button>
 </form>
 
-<script>
-    console.log($('#start-location').val())
-    //if contents of select option equal value from databse, give it selected property
-    $updateTrip = $('#update-trip-submit')
-    
-    $addResponseEl = $('#response-setting-add')
-    $addResponseEl.click((evt)=>{
-        evt.preventDefault()
-        //want method(dropdown), amount of time before(number form), and lastly calculation method(dropdown)
-        $('<br><button>Hey</button>').insertAfter($addResponseEl)
-        console.log('I was clicked')
-    })
 
-    $startPH = $('#start-location')
-    
-    //upon click, append the new fields to form
-    //ajax requests for updating form when hit submit
-    $updateTrip.click((evt)=>{
-        evt.preventDefault()
-        //set values from DOM
-        
-        //put values intro form data
-            
-        var updatedTrip = {
-            start: $('#start-location').val(),
-            end: $('#end-location').val(),
-            method: $(".alarm-method-select option:selected")[0].text,
-            timing: $(".time-method-select option:selected")[0].text,
-        }
-        
-        console.log('tried to update trip')
-        $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
-            console.log("response", res)
-        })
-    }) 
-    var thisTrip
-    $.ajax({url:'/trips/<%= trip.id %>/json', method: 'get'}).done((res)=>{
-        thisTrip = res
-    })
-</script>
