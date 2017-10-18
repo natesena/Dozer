@@ -88,16 +88,16 @@
           var start = document.getElementById('start-location').value || thisTrip.start;
           var end = document.getElementById('end-location').placeholder || thisTrip.end;
           
-          //var request = {
-            //origin: start,
-            //destination: end,
-            //travelMode: 'DRIVING'
-          //};
-          //directionsService.route(request, function(result, status) {
-            //if (status == 'OK') {
-              //directionsDisplay.setDirections(result);
-            //}
-          //});
+          var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'DRIVING'
+          };
+          directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+              directionsDisplay.setDirections(result);
+            }
+          });
         }
         
         initialize()
