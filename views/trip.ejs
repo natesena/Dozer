@@ -1,51 +1,6 @@
 
-<script>
-        var thisTrip
-        $.ajax({url:'/trips/<%= trip.id %>/json', method: 'get'}).done((res)=>{
-            thisTrip = res
-        })  
-       
-        //if contents of select option equal value from database, give it selected property
-        $updateTrip = $('#update-trip-submit')
-        
-        $addResponseEl = $('#response-setting-add')
-        $addResponseEl.click((evt)=>{
-            evt.preventDefault()
-            //want method(dropdown), amount of time before(number form), and lastly calculation method(dropdown)
-            $('<br><button>Hey</button>').insertAfter($addResponseEl)
-            console.log('I was clicked')
-        })
-    
-        $startPH = $('#start-location')
-        
-        //upon click, append the new fields to form
-        $updateTrip.click((evt)=>{
-            evt.preventDefault()
-            //if blank, don't change to blank!
-            $start = $('#start-location').val() || thisTrip.start
-            $end = $('#end-location').val() || thisTrip.end
-            //put values intro form data
-            var updatedTrip = {
-                start: $start,
-                end: $end,
-                method: $(".alarm-method-select option:selected")[0].text,
-                timing: $(".time-method-select option:selected")[0].text,
-            }
-            //send it!
-            console.log('tried to update trip')
-            $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
-                console.log("response", res)
-            })
-        }) 
-</script>
 <h1>You are on the trip page!</h1>
-<iframe
-  width="600"
-  height="450"
-  frameborder="0" style="border:0"
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDsMnw8UI7aAC_amQkRcoTruyoZ4nBSsQE
-    &q=Seattle" allowfullscreen>
-</iframe>
+<div id="map" style="width: 100%; height: 400px"></div>
 <p>Settings here</p>
 
 <!-- Start,End, Method,Timing -->
@@ -92,3 +47,93 @@
 </form>
 
 
+
+<script>
+        var thisTrip
+        $.ajax({url:'/trips/<%= trip.id %>/json', method: 'get'}).done((res)=>{
+            thisTrip = res
+        })  
+
+        //---------------------------------------------------------
+            //my google stuff here
+            //var startInput = document.getElementById('start-location')
+            //var endInput = document.getElementById('end-location')
+            //console.log(startInput, endInput)
+
+            var options = {
+
+            }
+
+            //startAutoComplete = new google.maps.places.Autocomplete(startInput, options)
+            //endAutoComplete = new google.maps.places.Autocomplete(endInput, options)
+        //---------------------------------------------------------
+            //copied google code
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        var map;
+        
+        function initialize() {
+          directionsDisplay = new google.maps.DirectionsRenderer();
+          var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+          var mapOptions = {
+            zoom:7,
+            center: chicago
+          }
+          map = new google.maps.Map(document.getElementById('map'), mapOptions);
+          directionsDisplay.setMap(map);
+        }
+        
+
+        function calcRoute() {
+          var start = document.getElementById('start-location').value || thisTrip.start;
+          var end = document.getElementById('end-location').placeholder || thisTrip.end;
+          
+          //var request = {
+            //origin: start,
+            //destination: end,
+            //travelMode: 'DRIVING'
+          //};
+          //directionsService.route(request, function(result, status) {
+            //if (status == 'OK') {
+              //directionsDisplay.setDirections(result);
+            //}
+          //});
+        }
+        
+        initialize()
+
+        //----------------------------------------------------------
+       
+        //if contents of select option equal value from database, give it selected property
+        $updateTrip = $('#update-trip-submit')
+        
+        $addResponseEl = $('#response-setting-add')
+        $addResponseEl.click((evt)=>{
+            evt.preventDefault()
+            //want method(dropdown), amount of time before(number form), and lastly calculation method(dropdown)
+            $('<br><button>Hey</button>').insertAfter($addResponseEl)
+            console.log('I was clicked')
+        })
+    
+        $startPH = $('#start-location')
+        
+        //upon click, append the new fields to form
+        $updateTrip.click((evt)=>{
+            evt.preventDefault()
+            //if blank, don't change to blank!
+            $start = $('#start-location').val() || thisTrip.start
+            $end = $('#end-location').val() || thisTrip.end
+            //put values intro form data
+            var updatedTrip = {
+                start: $start,
+                end: $end,
+                method: $(".alarm-method-select option:selected")[0].text,
+                timing: $(".time-method-select option:selected")[0].text,
+            }
+            //send it!
+            console.log('tried to update trip')
+            $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
+                console.log("response", res)
+            })
+        }) 
+</script>
