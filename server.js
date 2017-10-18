@@ -14,25 +14,8 @@ const
     passport = require('passport'),
     passportConfig = require('./config/passport.js'),
     userRoutes = require('./routes/users.js'),
-    tripRoutes = require('./routes/trips_routes.js'),
-    nodemailer = require('nodemailer')
-
-
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.GMAIL_EMAIL,
-        pass: process.env.GMAIL_PASSWORD
-    }
-})
-
-var currentTime = new Date(new Date().getTime()).toLocaleTimeString();
-const mailOptions = {
-    from: process.env.GMAIL_EMAIL, // sender address
-    to: 'dlorahoes@yahoo.com', // list of receivers
-    subject: `hello ${app.locals.currentUser}`, // Subject line
-    html: `<p>${currentTime}</p>`// plain text body
-};
+    tripRoutes = require('./routes/trips_routes.js')
+    
 
 // environment port
 const
@@ -85,19 +68,8 @@ app.get('/', (req,res) => {
     res.render('index')
 })
 
-
 app.use('/trips', tripRoutes)
 app.use('/', userRoutes)
-
-app.get('/test-email', (req, res) => {
-    setTimeout(function() {
-        transporter.sendMail(mailOptions, function (err, info) {
-            if(err) console.log(err)
-            else console.log(info);
-         });
-    }, 5000);
-    return res.send(`<h1>Doze off!!</h1>`)
-})
 
 app.listen(port, (err) => {
 console.log(err || "Server running on port " + port)

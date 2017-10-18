@@ -1,8 +1,9 @@
 const
     express = require('express'),
     tripsRouter = new express.Router(),
-    _ = require('underscore')
-    Trip = require('../models/Trip.js')
+    _ = require('underscore'),
+    Trip = require('../models/Trip.js'),
+    nodemailer = require('nodemailer')
 
 
 tripsRouter.route('/')
@@ -72,9 +73,25 @@ tripsRouter.route('/:tripId/json')
         })
     })
 
-tripsRouter.route('/:tripId/alarm')
-    .post((req, res) => {
-        Trip.findById(req.params.id, (err, trip) => {
+let transporter = nodemailer.createTransport({ 
+    service: 'gmail',
+    auth: {
+        user: process.env.GMAIL_EMAIL,
+        pass: process.env.GMAIL_PASSWORD
+    }
+})
+
+var currentTime = new Date(new Date().getTime()).toLocaleTimeString();
+const mailOptions = {
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: 'dlorahoes@yahoo.com', // list of receivers
+    subject: `Im hungry`, // Subject line
+    html: `<p>${currentTime}</p>`// plain text body
+};
+
+tripsRouter.route('/:tripId/alarm') // moved from server, created route and view for alarm
+    .get((req, res) => {
+        Trip.findById(req.params.tripId, (err, trip) => {
             if(err) {
                 res.json(err)
             } else {
@@ -84,7 +101,7 @@ tripsRouter.route('/:tripId/alarm')
                         else console.log(info);
                      });
                 }, 5000);
-                return res.send(`<h1>Doze off!!</h1>`)
+                return res.render('alarm', {trip: trip})
             }
         })
     })
