@@ -1,4 +1,5 @@
 const
+    dotenv = require('dotenv').load()
     express = require('express'),
     app = express(),
     ejs = require('ejs'),
@@ -13,7 +14,25 @@ const
     passport = require('passport'),
     passportConfig = require('./config/passport.js'),
     userRoutes = require('./routes/users.js'),
-    tripRoutes = require('./routes/trips_routes.js')
+    tripRoutes = require('./routes/trips_routes.js'),
+    nodemailer = require('nodemailer')
+
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.GMAIL_EMAIL,
+        pass: process.env.GMAIL_PASSWORD
+    }
+})
+
+var currentTime = new Date(new Date().getTime()).toLocaleTimeString();
+const mailOptions = {
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: 'dlorahoes@yahoo.com', // list of receivers
+    subject: 'Sending from dozer app!', // Subject line
+    html: `<p>${currentTime}</p>`// plain text body
+};
 
 // environment port
 const
@@ -72,6 +91,16 @@ app.use('/trips', tripRoutes)
 
 app.use('/trips', tripRoutes)
 app.use('/', userRoutes)
+
+app.get('/test-email', (req, res) => {
+    setTimeout(function() {
+        transporter.sendMail(mailOptions, function (err, info) {
+            if(err) console.log(err)
+            else console.log(info);
+         });
+    }, 3 * 60 * 1000);
+    return res.send(`<h1>Doze off!!</h1>`)
+})
 
 app.listen(port, (err) => {
 console.log(err || "Server running on port " + port)
