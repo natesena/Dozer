@@ -30,7 +30,7 @@ var currentTime = new Date(new Date().getTime()).toLocaleTimeString();
 const mailOptions = {
     from: process.env.GMAIL_EMAIL, // sender address
     to: 'dlorahoes@yahoo.com', // list of receivers
-    subject: 'Sending from dozer app!', // Subject line
+    subject: `hello ${app.locals.currentUser}`, // Subject line
     html: `<p>${currentTime}</p>`// plain text body
 };
 
@@ -74,9 +74,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use((req, res, next) => {
-	app.locals.currentUser = req.user // currentUser now available in ALL views
+    app.locals.currentUser = req.user // currentUser now available in ALL views
 	app.locals.loggedIn = !!req.user // a boolean loggedIn now available in ALL views
-
+    
 	next()
 })
 
@@ -84,9 +84,6 @@ app.use((req, res, next) => {
 app.get('/', (req,res) => {
     res.render('index')
 })
-
-
-app.use('/trips', tripRoutes)
 
 
 app.use('/trips', tripRoutes)
@@ -98,7 +95,7 @@ app.get('/test-email', (req, res) => {
             if(err) console.log(err)
             else console.log(info);
          });
-    }, 3 * 60 * 1000);
+    }, 5000);
     return res.send(`<h1>Doze off!!</h1>`)
 })
 

@@ -42,8 +42,7 @@ tripsRouter.route('/:tripId')
         Trip.findById(req.params.id, (err, trip) => {
             if(err) {
                 res.json(err)
-            }
-            else{
+            } else {
                 res.render('trip', {trip: trip})
             }
         })
@@ -51,6 +50,23 @@ tripsRouter.route('/:tripId')
     .patch((req, res) => {
         Trip.findById(req.params.id, (err, trip) => {
 
+        })
+    })
+
+tripsRouter.route('/:tripId/alarm')
+    .post((req, res) => {
+        Trip.findById(req.params.id, (err, trip) => {
+            if(err) {
+                res.json(err)
+            } else {
+                setTimeout(function() {
+                    transporter.sendMail(mailOptions, function (err, info) {
+                        if(err) console.log(err)
+                        else console.log(info);
+                     });
+                }, 5000);
+                return res.send(`<h1>Doze off!!</h1>`)
+            }
         })
     })
 
