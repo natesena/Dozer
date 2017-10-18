@@ -3,7 +3,9 @@ const
     tripsRouter = new express.Router(),
     _ = require('underscore'),
     Trip = require('../models/Trip.js'),
-    nodemailer = require('nodemailer')
+    nodemailer = require('nodemailer'),
+    User = require('../models/User.js')
+
 
 
 tripsRouter.route('/')
@@ -62,12 +64,13 @@ tripsRouter.route('/:tripId')
     })
 tripsRouter.route('/:tripId/json')
     .get((req, res) => {
-        console.log(req.params.tripId)
+        
         Trip.findById(req.params.tripId, (err, trip) => {
             if(err) {
                 res.json(err)
             }
             else{
+                
                 res.json(trip)
             }
         })
