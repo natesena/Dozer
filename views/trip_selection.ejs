@@ -1,9 +1,13 @@
 <!-- Author: Nate -->
 <p>All trips here</p>
-<%= trips %>
+<% trips.forEach(function(trip) {   %>
+     <%= trip %> <br> 
+<% })                              %> 
 <br>
 <p>Below should be the sorted trip destinations</p>
-<%= sortedEnds %>
+<% sortedEnds.forEach(function(element) {   %>
+     <%= element %> <br> 
+<%  })                                      %>
 <!-- must discrern routes -->
 <form method="post" action="/trips" >
     <button class= "btn" type="submit">New Trip</button>

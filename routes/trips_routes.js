@@ -19,6 +19,8 @@ tripsRouter.route('/')
             res.render('trip_selection', {trips: trips, sortedEnds: sortedTripsByDest})
         })
     })
+
+    // send a array of three trips
     //need to post to user
     .post((req, res) => {
         var newTrip = new Trip()
