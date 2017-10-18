@@ -49,8 +49,15 @@ tripsRouter.route('/:tripId')
         })
     })
     .patch((req, res) => {
-        Trip.findById(req.params.id, (err, trip) => {
-
+        Trip.findByIdAndUpdate(req.params.tripId, req.body, {new: true}, (err, trip) => {
+            //not updating correctly
+            console.log("req.body" + JSON.stringify(req.body))
+            if(err){ return console.log(err)}
+            else{
+                //send back ajax
+                console.log('Trip should have updated')
+                res.json({success:true, message:"trip updated", trip: trip})
+            }
         })
     })
 

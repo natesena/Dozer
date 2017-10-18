@@ -5,27 +5,27 @@
 <p><%= trip.method %></p>
 <!-- Start,End, Method,Timing -->
 
-<form>
+<form method="patch">
     <div class="form-group">
-      <label for="exampleInputEmail1">Start Location</label>
-      <input type="text" class="form-control" id=""  placeholder="<%= trip.start %>">
+      <label>Start Location</label>
+      <input type="text" class="form-control" id="start-location"  placeholder="<%= trip.start %>">
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">End Location</label>
-      <input type="text" class="form-control" id="" placeholder="<%= trip.end %>">
+      <label>End Location</label>
+      <input type="text" class="form-control" id="end-location" placeholder="<%= trip.end %>">
     </div>
     <!-- need Method, Timing -->
     <!-- Upon click, add new field for method/timing -->
     <div class="row">
         <div class="col-sm-3">
-            <select class="custom-select">
+            <select class="custom-select time-method-select" id="time-method">
                     <option selected>Time Method</option>
                     <option value="1" <% if (trip.timing =='By Distance') { %> selected="selected"<% } %>>By Distance</option>
                     <option value="2" <% if (trip.timing =='By Time') { %> selected="selected"<% } %>>By Time</option>
             </select>
         </div>
         <div class="col-sm-3">
-            <select class="custom-select">
+            <select class="custom-select alarm-method-select" id="alarm-method">
                     <option selected>Alarm Option</option>
                     <option value="1" <% if (trip.method =='Call') { %> selected="selected"<% } %>>Call</option>
                     <option value="2" <% if (trip.method =='Text') { %> selected="selected"<% } %>>Text</option>
@@ -44,12 +44,13 @@
         </div>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" id="update-trip-submit">Submit</button>
 </form>
 
 <script>
+    console.log($('#start-location').val())
     //if contents of select option equal value from databse, give it selected property
-
+    $updateTrip = $('#update-trip-submit')
     $addResponseEl = $('#response-setting-add')
     $addResponseEl.click((evt)=>{
         evt.preventDefault()
@@ -58,5 +59,22 @@
         console.log('I was clicked')
     })
     //upon click, append the new fields to form
+    //ajax requests for updating form when hit submit
+    $updateTrip.click((evt)=>{
+        evt.preventDefault()
+        //set values from DOM
+        //put values intro form data
+        var updatedTrip = {
+            start: $('#start-location').val(),
+            end: $('#end-location').val(),
+            method: $(".alarm-method-select option:selected")[0].text,
+            timing: $(".time-method-select option:selected")[0].text,
+        }
+        
+        console.log('tried to update trip')
+        $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
+            console.log("response", res)
+        })
+    })
     
 </script>
