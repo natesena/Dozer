@@ -39,7 +39,7 @@ tripsRouter.route('/')
 
 tripsRouter.route('/:tripId')
     .get((req, res) => {
-        Trip.findById(req.params.id, (err, trip) => {
+        Trip.findById(req.params.tripId, (err, trip) => {
             if(err) {
                 res.json(err)
             } else {
@@ -48,8 +48,27 @@ tripsRouter.route('/:tripId')
         })
     })
     .patch((req, res) => {
-        Trip.findById(req.params.id, (err, trip) => {
-
+        Trip.findByIdAndUpdate(req.params.tripId, req.body, {new: true}, (err, trip) => {
+            //not updating correctly
+            console.log("req.body" + JSON.stringify(req.body))
+            if(err){ return console.log(err)}
+            else{
+                //send back ajax
+                console.log('Trip should have updated')
+                res.json({success:true, message:"trip updated", trip: trip})
+            }
+        })
+    })
+tripsRouter.route('/:tripId/json')
+    .get((req, res) => {
+        console.log(req.params.tripId)
+        Trip.findById(req.params.tripId, (err, trip) => {
+            if(err) {
+                res.json(err)
+            }
+            else{
+                res.json(trip)
+            }
         })
     })
 

@@ -33,6 +33,7 @@
     "nodemailer": "^4.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "popper.js": "^1.12.5",
     "underscore": "^1.8.3"
   }
 }
