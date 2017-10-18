@@ -6,9 +6,18 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 </head>
 <body>
+	<% if(!currentUser) { %>
+		<% currentUser = "not logged in" %>
+	<% } %>
+		<%= currentUser.name %>
+	<form action="/logout" method="get">
+		<button class="btn" type="submit">logout</button>
+	</form>
 	<div class="container">
+			<h1 style="font-family: 'Pacifico', cursive;">Dozer</h1>
 		<%- body %>
 	</div>
 </body>
