@@ -17,3 +17,9 @@
 #settings{
     padding: 12px 0 12px 0;
 }
+.trans-radio-button{
+    text-align: center
+}
+.trans-radio-button-group{
+    margin: 12px 0 12px 0
+}
