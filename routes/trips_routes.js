@@ -53,18 +53,20 @@ tripsRouter.route('/')
     // send a array of three trips
     //need to post to user
     .post((req, res) => {
-        var newTrip = new Trip()
-        newTrip.user = req.user
-        newTrip.save((err, trip) => {
-            if(err){
-                res.json(err)
-            }
-            //else redirect to new page showing info from latest trip in db
-            else {
-                console.log(newTrip)
-                res.redirect(`/trips/${newTrip.id}`)
-            }
-        })
+        console.log(req.body)
+        res.render('trip', {trip: req.body.trip})
+        // var newTrip = new Trip()
+        // newTrip.user = req.user
+        // newTrip.save((err, trip) => {
+        //     if(err){
+        //         res.json(err)
+        //     }
+        //     //else redirect to new page showing info from latest trip in db
+        //     else {
+        //         console.log(newTrip)
+        //         res.render('trip', {trip: req.body.trip})
+        //     }
+        // })
     })
     
     //add get
