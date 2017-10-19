@@ -2,7 +2,7 @@
     text-align: center;
 }
 #update-trip-submit{
-    vertical-align: middle;
+    width: 100%
 }
 #navbar-title{
     font-family: 'Pacifico', cursive;
