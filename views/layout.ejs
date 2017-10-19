@@ -3,28 +3,47 @@
 <html>
 <head>
 	<title>Dozer App</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg2ho73YTAF-68yB3Y8OHtaYr-yC7UZpc&libraries=places"></script>
 	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
-	<% if(!currentUser) { %>
+	<!-- <% if(!currentUser) { %>
 		<% currentUser = "not logged in" %>
 	<% } %>
-		<%= currentUser.name %>
-	<form action="/logout" method="get">
-		<button class="btn" type="submit">logout</button>
-	</form>
-	<form action="/trips" method="get">
-		<button class="btn" type="submit">View Trips</button>
-	</form>
-	<form action="/profile" method="get">
-		<button class="btn" type="submit">Profile</button>
-	</form>
+  
+		<%= currentUser.name %> -->
+
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				 
+				  <a class="navbar-brand" id="navbar-title" href="/" title="The Title">
+					  Dozer
+					<!-- <img style="max-width:100px;" src="images/LOGO-4.png"> -->
+				  </a>
+				</div>
+				
+				<div class="collapse navbar-collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav pull-right">
+						<li class="active"><a href="/logout">Logout</a></li>
+						<li><a href="/trips">Trips</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
 	<div class="container">
-			<h1 style="font-family: 'Pacifico', cursive;">Dozer</h1>
+			<h1 style="font-family: 'Pacifico', cursive;" class="dozer-title">Dozer</h1>
 		<%- body %>
 	</div>
 </body>

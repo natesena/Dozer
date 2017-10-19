@@ -16,14 +16,14 @@
     <!-- Upon click, add new field for method/timing -->
     <div class="row">
         <div class="col-sm-3">
-            <select class="custom-select time-method-select" id="time-method">
+            <select class="custom-select time-method-select form-control" id="time-method">
                     <option selected>Time Method</option>
                     <option value="1" <% if (trip.timing =='By Distance') { %> selected="selected"<% } %>>By Distance</option>
                     <option value="2" <% if (trip.timing =='By Time') { %> selected="selected"<% } %>>By Time</option>
             </select>
         </div>
         <div class="col-sm-3">
-            <select class="custom-select alarm-method-select" id="alarm-method">
+            <select class="custom-select alarm-method-select form-control" id="alarm-method">
                     <option selected>Alarm Option</option>
                     <option value="1" <% if (trip.method =='Call') { %> selected="selected"<% } %>>Call</option>
                     <option value="2" <% if (trip.method =='Text') { %> selected="selected"<% } %>>Text</option>
