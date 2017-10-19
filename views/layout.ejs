@@ -12,11 +12,9 @@
 	<link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
-	<!-- <% if(!currentUser) { %>
-		<% currentUser = "not logged in" %>
-	<% } %>
+	
   
-		<%= currentUser.name %> -->
+		
 
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
@@ -35,7 +33,10 @@
 				
 				<div class="collapse navbar-collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav pull-right">
-						<li class="active"><a href="/logout">Logout</a></li>
+							<% if(currentUser) { %>
+								<li class="active"><a href="/logout">Logout</a></li>
+							<% } %>
+						
 						<li><a href="/trips">Trips</a></li>
 					</ul>
 				</div>

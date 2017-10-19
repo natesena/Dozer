@@ -31,8 +31,9 @@ passport.use('local-signup', new LocalStrategy({
 		if(err) return done(err)
 		if(user) return done(null, false, req.flash('signupMessage', 'That email is taken.'))
 		var newUser = new User()
-         newUser.name = req.body.name
+        newUser.name = req.body.name
 		newUser.email = email
+		newUser.contact = req.body.contact
 		newUser.password = newUser.generateHash(password)
 		newUser.save((err) => {
 			if(err) throw err

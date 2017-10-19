@@ -4,9 +4,9 @@
      <%= trip %> <br> 
 <% })                              %>  -->
 
-<p>Your past destinations</p>
+<p style="font-family: 'Pacifico', cursive; font-size: 18px">Your top 3 popular destinations</p>
 <% sortedEnds.forEach(function(element) {   %>
-     <%= `Depart: ${element} Arrival: ${element._id} ${element.count}` %> <br> 
+   <button class="btn btn-primary">Go Here!</button>  <%= `${element._id}` %> <br> 
 <%  })                                      %>
 <!-- must discrern routes -->
 <form method="post" action="/trips" >
