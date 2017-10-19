@@ -12,37 +12,40 @@ tripsRouter.route('/')
         //console.log(req)
 
         Trip.find({user: req.user}, (err, trips) => {
-          console.log(req.user._id)
+         
             //look through user's trips and find top 3 destinations
-            // if(err){
-            //     res.json(err)
-            // } else{
-            Trip.aggregate([
-                {
-                    $match: {
-                        user: req.user._id
+            if(err) {
+                 res.json(err)
+            } 
+            else{
+                Trip.aggregate([
+                    {
+                        $match: {
+                            user: req.user._id
+                        }
+                    },
+                    {
+                        $group: {
+                        _id: "$end", count: { $sum: 1 }
+                                }
+                    },
+                    { 
+                        $sort: { 
+                        count: -1 
+                                } 
+                    },
+                    {
+                        $limit : 3
                     }
-                },
-                {
-                    $group: {
-                      _id: "$end", count: { $sum: 1 }
-                            }
-                },
-                { 
-                    $sort: { 
-                    count: -1 
-                            } 
-                },
-                {
-                    $limit : 3
-                }
-                ])
-              .exec(function(err, aggregatedTrips){
-                if(err)console.log(err)
-                console.log(aggregatedTrips)
-                res.render('trip_selection', {trips: trips, sortedEnds: aggregatedTrips})    
-            })
-       // }
+
+                    ])
+                .exec(function(err, aggregatedTrips){
+                    if(err)console.log(err)
+                    console.log(aggregatedTrips)
+                    res.render('trip_selection', {trips: trips, sortedEnds: aggregatedTrips})
+                })
+            }
+
   
         })
         

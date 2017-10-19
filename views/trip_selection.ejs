@@ -1,10 +1,10 @@
-
 <!-- <p>All trips here</p>
 <% trips.forEach(function(trip) {   %>
      <%= trip %> <br> 
 <% })                              %>  -->
 
 <p style="font-family: 'Pacifico', cursive; font-size: 18px">Your top 3 popular destinations</p>
+
 <% sortedEnds.forEach(function(element) {   %>
     <form method="post" action="/trips" >
         <input type="hidden" name="trip" value="<%= element._id %>">
