@@ -34,6 +34,11 @@ const store = new MongoDBStore({
     });
 
 // middleware
+app.use(
+    "/",
+    express.static(__dirname)
+);
+
 app.use(logger('dev'))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
