@@ -108,9 +108,8 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                   };
-      
                   infoWindow.setPosition(pos);
-                  infoWindow.setContent('Location found.');
+                  infoWindow.setContent('Current Location');
                   infoWindow.open(map);
                   map.setCenter(pos);
                 }, function() {
@@ -124,7 +123,7 @@
 
           directionsDisplay = new google.maps.DirectionsRenderer();
           //center on  start location
-          var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+          var chicago = new google.maps.LatLng(34.0129941, -118.49538489999998);
           var mapOptions = {
             zoom:7,
             center: chicago
@@ -196,6 +195,7 @@
             console.log('tried to update trip')
             $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
                 console.log("response", res)
+                calcRoute()
                 //-----Google Distance Matrix Code----
                 var travelMode
                 if($publicTransitRadioEl.prop("checked")){
