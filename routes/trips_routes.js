@@ -3,8 +3,9 @@ const
     tripsRouter = new express.Router(),
     _ = require('underscore'),
     Trip = require('../models/Trip.js'),
+    User = require('../models/User.js'),
     nodemailer = require('nodemailer'),
-    User = require('../models/User.js')
+    twilio = require('twilio')
 
 
 
@@ -72,13 +73,12 @@ tripsRouter.route('/:tripId/json')
                 res.json(err)
             }
             else{
-                
                 res.json(trip)
             }
         })
     })
 
-let transporter = nodemailer.createTransport({ 
+var transporter = nodemailer.createTransport({ 
     service: 'gmail',
     auth: {
         user: process.env.GMAIL_EMAIL,
@@ -94,18 +94,43 @@ const mailOptions = {
     html: `<p>${currentTime}</p>`// plain text body
 };
 
-tripsRouter.route('/:tripId/alarm') // moved from server, created route and view for alarm
+const
+    accountSid = process.env.TWILIO_ACCOUNT_SID,
+    authToken = process.env.TWILIO_AUTH_TOKEN,
+    twilioNumber = process.env.TWILIO_NUMBER,
+    client = new twilio(accountSid, authToken)
+
+tripsRouter.route('/:tripId/alarm/:tripDuration') 
     .get((req, res) => {
         Trip.findById(req.params.tripId, (err, trip) => {
             if(err) {
                 res.json(err)
             } else {
+                var alertSecs = trip.alertSeconds * 60
+                var duration = req.params.tripDuration
+                var interval = (duration - alertSecs) * 1000
                 setTimeout(function() {
-                    transporter.sendMail(mailOptions, function (err, info) {
-                        if(err) console.log(err)
-                        else console.log(info);
-                     });
-                }, 5000);
+                    if(trip.method == "Email") { // if email run this 
+                        transporter.sendMail(mailOptions, function (err, info) {
+                            if(err) console.log(err)
+                            else console.log(info);
+                        })
+                    } else if (trip.method == "Text") {
+                        client.messages.create({
+                            to: '+12133276225',
+                            // from: twilioNumber,
+                            body: 'WSUP'
+                        })
+                        .then((message) => console.log(message.sid));
+                    } else if (trip.method == "Call") {
+                        client.api.calls.create({
+                            url: 'http://demo.twilio.com/docs/voice.xml',
+                            to: '+12133276225',
+                            from: twilioNumber
+                        })
+                        .then((call) => console.log(call.sid));
+                    };
+                }, interval);
                 return res.render('alarm', {trip: trip})
             }
         })
