@@ -1,12 +1,12 @@
-<!-- Author: Nate -->
-<p>All trips here</p>
+
+<!-- <p>All trips here</p>
 <% trips.forEach(function(trip) {   %>
      <%= trip %> <br> 
-<% })                              %> 
-<br>
-<p>Below should be the sorted trip destinations</p>
+<% })                              %>  -->
+
+<p>Your past destinations</p>
 <% sortedEnds.forEach(function(element) {   %>
-     <%= element %> <br> 
+     <%= `Depart: ${element} Arrival: ${element._id} ${element.count}` %> <br> 
 <%  })                                      %>
 <!-- must discrern routes -->
 <form method="post" action="/trips" >
