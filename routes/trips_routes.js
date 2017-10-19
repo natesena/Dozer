@@ -9,17 +9,34 @@ const
 tripsRouter.route('/')
     .get((req, res) => {
         //need to find by user
-        console.log(req.user)
+        //console.log(req)
+
         Trip.find({user: req.user}, (err, trips) => {
-          //console.log()
+          console.log(req.user._id)
             //look through user's trips and find top 3 destinations
             // if(err){
             //     res.json(err)
             // } else{
-            Trip.aggregate(
+            Trip.aggregate([
+                {
+                    $match: {
+                        user: req.user._id
+                    }
+                },
                 {
                     $group: {
-                      _id: "$end", count: { $sum: 1 }}})
+                      _id: "$end", count: { $sum: 1 }
+                            }
+                },
+                { 
+                    $sort: { 
+                    count: -1 
+                            } 
+                },
+                {
+                    $limit : 3
+                }
+                ])
               .exec(function(err, aggregatedTrips){
                 if(err)console.log(err)
                 console.log(aggregatedTrips)
