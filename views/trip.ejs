@@ -25,6 +25,7 @@
     </div>
     <!-- need Method, Timing -->
     <!-- Upon click, add new field for method/timing -->
+
     <div class="row" >
         <div class="" id="settings">
             <div class="col-sm-3">
@@ -47,8 +48,9 @@
             <div class="col-sm-3">
                 <div class="form-group alarm-setting">
                         <label>Alert Me</label>
-                        <input type="number" class="form-control" id="" placeholder="5 minutes before">
+                        <input type="number" class="form-control" id="alert-seconds" placeholder="5 minutes before">
                 </div>
+
             </div>
         </div>
         <div class="col-sm-3">
@@ -183,19 +185,21 @@
             //if blank, don't change to blank!
             $start = $('#start-location').val() || thisTrip.start
             $end = $('#end-location').val() || thisTrip.end
-            
+            $alertSeconds = $("#alert-seconds").val()
+
             //put values intro form data
             var updatedTrip = {
                 start: $start,
                 end: $end,
                 method: $(".alarm-method-select option:selected")[0].text,
                 timing: $(".time-method-select option:selected")[0].text,
+                alertSeconds: $alertSeconds
             }
             //send it!
             console.log('tried to update trip')
             $.ajax({url:'/trips/<%= trip.id %>',data: updatedTrip, method: "patch"}).done((res)=>{
                 console.log("response", res)
-                calcRoute()
+                  calcRoute();
                 //-----Google Distance Matrix Code----
                 var travelMode
                 if($publicTransitRadioEl.prop("checked")){
@@ -204,20 +208,22 @@
                 else{
                     travelMode = "DRIVING"
                 }
-                    //fake origin and destination
-                    var origin = document.getElementById('start-location').value || thisTrip.start
-                    var destination = document.getElementById('end-location').value || thisTrip.end
+                    
+                var origin = document.getElementById('start-location').value || thisTrip.start
+                var destination = document.getElementById('end-location').value || thisTrip.end
 
                 var service = new google.maps.DistanceMatrixService();
-                service.getDistanceMatrix(
-                    {
+                service.getDistanceMatrix({
                         origins: [origin],
                         destinations: [destination],
                         travelMode: travelMode,
-                    }, function callback(response, status) {
+                    }, (res, status) => {
+                    var tripDuration = res.rows[0].elements[0].duration.value
                         if (status == 'OK') {
-                            console.log("distance matrix", response)
-                            //harold calls setTimeout after calculating time differential
+                            console.log("distance matrix", res)
+                            $.ajax({url:'/trips/<%= trip.id %>/alarm/' + tripDuration , method: "get", contentType: 'application/json' }).done((res) => {
+                            
+                        })
                         }
                       })
                 //----------------------------------------
