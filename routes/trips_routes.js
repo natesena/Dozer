@@ -42,8 +42,6 @@ tripsRouter.route('/')
                     if(err)console.log(err)
                     console.log(aggregatedTrips)
                     res.render('trip_selection', {trips: trips, sortedEnds: aggregatedTrips})
-                
-                    
                 })
             }
   
