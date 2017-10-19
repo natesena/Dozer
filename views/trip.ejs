@@ -1,7 +1,6 @@
 
 <div id="map" style="width: 100%; height: 400px"></div>
 
-
 <!-- Start,End, Method,Timing -->
 <form method="patch">
     <div class="form-group">
@@ -14,32 +13,37 @@
     </div>
     <!-- need Method, Timing -->
     <!-- Upon click, add new field for method/timing -->
-    <div class="row">
-        <div class="col-sm-3">
-            <select class="custom-select time-method-select form-control" id="time-method">
-                    <option selected>Time Method</option>
-                    <option value="1" <% if (trip.timing =='By Distance') { %> selected="selected"<% } %>>By Distance</option>
-                    <option value="2" <% if (trip.timing =='By Time') { %> selected="selected"<% } %>>By Time</option>
-            </select>
-        </div>
-        <div class="col-sm-3">
-            <select class="custom-select alarm-method-select form-control" id="alarm-method">
-                    <option selected>Alarm Option</option>
-                    <option value="1" <% if (trip.method =='Call') { %> selected="selected"<% } %>>Call</option>
-                    <option value="2" <% if (trip.method =='Text') { %> selected="selected"<% } %>>Text</option>
-            </select>
-        </div >
-        <!-- this will change base on first dropdown select -->
-        <div class="col-sm-3">
-            <div class="form-group">
-                    <label>Alert Me</label>
-                    <input type="number" class="form-control" id="" placeholder="5 minutes before">
+    <div class="row" >
+        <div class="" id="settings">
+            <div class="col-sm-3">
+                <label>Calculate Alarm Time</label>
+                <select class="custom-select time-method-select form-control alarm-setting" id="time-method">
+                        <option selected>Time Method</option>
+                        <option value="1" <% if (trip.timing =='By Distance') { %> selected="selected"<% } %>>By Distance</option>
+                        <option value="2" <% if (trip.timing =='By Time') { %> selected="selected"<% } %>>By Time</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label>Alarm Method</label>
+                <select class="custom-select alarm-method-select form-control alarm-setting" id="alarm-method">
+                        <option selected>Alarm Option</option>
+                        <option value="1" <% if (trip.method =='Call') { %> selected="selected"<% } %>>Call</option>
+                        <option value="2" <% if (trip.method =='Text') { %> selected="selected"<% } %>>Text</option>
+                </select>
+            </div >
+            <!-- this will change base on first dropdown select -->
+            <div class="col-sm-3">
+                <div class="form-group alarm-setting">
+                        <label>Alert Me</label>
+                        <input type="number" class="form-control" id="" placeholder="5 minutes before">
+                </div>
             </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <label for="">Add Another Alarm</label><br>
             <button class="btn" id="response-setting-add">+</button>
         </div>
+    
     </div>
     <br>
     <button type="submit" class="btn btn-primary" id="update-trip-submit">Submit</button>
@@ -84,7 +88,6 @@
         }
         //-------------------------
         
-
 
         function calcRoute() {
           var start = document.getElementById('start-location').value || thisTrip.start;
