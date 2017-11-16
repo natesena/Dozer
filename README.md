@@ -1,9 +1,11 @@
 # DOZER
+## [Try Dozer Here](https://evening-bastion-15027.herokuapp.com/)
 
 ### Idea: 
 Ever want to get more sleep on your way to get somewhere, but don't want to miss your stop? Yes people, we're talking ubers, lyfts, buses, and subways.
 
 What if you could sleep on your way without worry of missing your stop?! Now you sound like a dozer!
+
 
 ![Login Screen](https://i.imgur.com/cVmAqTS.png)
 
